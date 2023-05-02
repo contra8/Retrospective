@@ -27,6 +27,8 @@
 		const child = document.createElement('span');
 		child.textContent = inputArea.value // 'child';
 		childDiv.appendChild(child);
+		// childDiv.css("padding", "10px");
+		childDiv.setAttribute("style", "padding: 10px");
 		
 		switch (isChecked) {
 			case "start":
@@ -137,5 +139,9 @@
 	.column {
 		/* border: 1px solid black; */
 		margin: 20px;
+	}
+
+	.column > div {
+		padding: 50px;
 	}
 </style>
