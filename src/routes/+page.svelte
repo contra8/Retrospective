@@ -3,13 +3,31 @@
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
 
-	let start; 
+	let inputArea;
+	let startContainer;
+	let stopContainer;
+	let continueContainer;
 
-	function handleClick() {
-		//alert('no more alerts');
+	let checked = "start";
+
+	function handleRadioStartClick() {
+		checked = "start";
+	}
+
+	function handleRadioStopClick() {
+		checked = "stop";
+	}
+
+	function handleRadioContinueClick() {
+		checked = "continue";
+	}
+
+	function addCard() {
+		const childDiv = document.createElement('div');
 		const child = document.createElement('span');
-		child.textContent = 'child';
-		start.appendChild(child);
+		child.textContent = inputArea.value // 'child';
+		childDiv.appendChild(child);		
+		startContainer.appendChild(childDiv);
 	}
 </script>
 
@@ -41,28 +59,13 @@
 
 	<div class="container">
 		<div class="column">Neue Karte<br/>
-			<textarea name="HTML_Nobelpreis" rows=3 cols=30></textarea>
-			<!--form action="/action_page.php" id="carform">
-				<label for="fname">Firstname:</label>
-				<input type="text" id="fname" name="fname">
-				<input type="submit">
-			  </form-->
-			  <!--br-->
-			  
-			  <!--label for="cars">Choose a car:</label>
-			  <select id="cars" name="carlist" form="carform">
-				<option value="volvo">Volvo</option>
-				<option value="saab">Saab</option>
-				<option value="opel">Opel</option>
-				<option value="audi">Audi</option>
-			  </select-->
-
+			<textarea name="HTML_Nobelpreis" rows=3 cols=30 bind:this={inputArea}></textarea>
 			<fieldset>
 				<!--legend>Select a maintenance drone:</legend-->
 			
 				<div>
 				  <input type="radio" id="huey" name="drone" value="start"
-						 checked>
+						 checked on:click={handleRadioStartClick}>
 				  <label for="huey">Start</label>
 				</div>
 			
@@ -76,12 +79,12 @@
 				  <label for="louie">Weitermachen</label>
 				</div>
 			</fieldset>
-			<button type="button" id="button" on:click={handleClick}>Karte hinzufügen</button>
+			<button type="button" id="button" on:click={addCard}>Karte hinzufügen</button>
 
 		</div>
-		<div class="column" id="1" bind:this={start}>START</div>
-		<div class="column" id="2">STOP</div>
-		<div class="column" id="3">WEITERMACHEN</div>
+		<div class="column" id="1" bind:this={startContainer}>START</div>
+		<div class="column" id="2" bind:this={stopContainer}>STOP</div>
+		<div class="column" id="3" bind:this={continueContainer}>WEITERMACHEN</div>
 	</div>
 </section>
 
