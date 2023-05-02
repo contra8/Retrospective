@@ -8,26 +8,37 @@
 	let stopContainer;
 	let continueContainer;
 
-	let checked = "start";
+	let isChecked = "start";
 
 	function handleRadioStartClick() {
-		checked = "start";
+		isChecked = "start";
 	}
 
 	function handleRadioStopClick() {
-		checked = "stop";
+		isChecked = "stop";
 	}
 
 	function handleRadioContinueClick() {
-		checked = "continue";
+		isChecked = "continue";
 	}
 
 	function addCard() {
 		const childDiv = document.createElement('div');
 		const child = document.createElement('span');
 		child.textContent = inputArea.value // 'child';
-		childDiv.appendChild(child);		
-		startContainer.appendChild(childDiv);
+		childDiv.appendChild(child);
+		
+		switch (isChecked) {
+			case "start":
+				startContainer.appendChild(childDiv);
+				return;
+			case "stop":
+				stopContainer.appendChild(childDiv);
+				return;
+			case "continue":
+				continueContainer.appendChild(childDiv);
+				return;
+		}
 	}
 </script>
 
@@ -58,7 +69,7 @@
 	<!--Counter /-->
 
 	<div class="container">
-		<div class="column">Neue Karte<br/>
+		<div class="column"><h2>Neue Karte</h2><br/>
 			<textarea name="HTML_Nobelpreis" rows=3 cols=30 bind:this={inputArea}></textarea>
 			<fieldset>
 				<!--legend>Select a maintenance drone:</legend-->
@@ -70,21 +81,21 @@
 				</div>
 			
 				<div>
-				  <input type="radio" id="dewey" name="drone" value="stop">
+				  <input type="radio" id="dewey" name="drone" value="stop" on:click={handleRadioStopClick}>
 				  <label for="dewey">Stop</label>
 				</div>
 			
 				<div>
-				  <input type="radio" id="louie" name="drone" value="continue">
+				  <input type="radio" id="louie" name="drone" value="continue" on:click={handleRadioContinueClick}>
 				  <label for="louie">Weitermachen</label>
 				</div>
 			</fieldset>
 			<button type="button" id="button" on:click={addCard}>Karte hinzufügen</button>
 
 		</div>
-		<div class="column" id="1" bind:this={startContainer}>START</div>
-		<div class="column" id="2" bind:this={stopContainer}>STOP</div>
-		<div class="column" id="3" bind:this={continueContainer}>WEITERMACHEN</div>
+		<div class="column" id="1" bind:this={startContainer}><h2>START</h2></div>
+		<div class="column" id="2" bind:this={stopContainer}><h2>STOP</h2></div>
+		<div class="column" id="3" bind:this={continueContainer}><h2>WEITERMACHEN</h2></div>
 	</div>
 </section>
 
@@ -125,5 +136,6 @@
 
 	.column {
 		/* border: 1px solid black; */
+		margin: 20px;
 	}
 </style>
