@@ -10,17 +10,8 @@
 
 	let checkedValue = "start";
 
-	function handleRadioStartClick(event) {
-		console.log(event);
-		checkedValue = "start";
-	}
-
-	function handleRadioStopClick() {
-		checkedValue = "stop";
-	}
-
-	function handleRadioContinueClick() {
-		checkedValue = "continue";
+	function handleRadioClick(event) {
+		checkedValue = event.target.value;
 	}
 
 	function addCard() {
@@ -78,18 +69,17 @@
 				<!--legend>Select a maintenance drone:</legend-->
 			
 				<div>
-				  <input type="radio" id="huey" name="drone" value="start"
-						 checked on:click={handleRadioStartClick}>
+				  <input type="radio" id="huey" name="drone" value="start" on:click={handleRadioClick} checked>
 				  <label for="huey">Start</label>
 				</div>
 			
 				<div>
-				  <input type="radio" id="dewey" name="drone" value="stop" on:click={handleRadioStopClick}>
+				  <input type="radio" id="dewey" name="drone" value="stop" on:click={handleRadioClick}>
 				  <label for="dewey">Stop</label>
 				</div>
 			
 				<div>
-				  <input type="radio" id="louie" name="drone" value="continue" on:click={handleRadioContinueClick}>
+				  <input type="radio" id="louie" name="drone" value="continue" on:click={handleRadioClick}>
 				  <label for="louie">Weitermachen</label>
 				</div>
 			</fieldset>
