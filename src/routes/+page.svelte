@@ -8,18 +8,19 @@
 	let stopContainer;
 	let continueContainer;
 
-	let isChecked = "start";
+	let checkedValue = "start";
 
-	function handleRadioStartClick() {
-		isChecked = "start";
+	function handleRadioStartClick(event) {
+		console.log(event);
+		checkedValue = "start";
 	}
 
 	function handleRadioStopClick() {
-		isChecked = "stop";
+		checkedValue = "stop";
 	}
 
 	function handleRadioContinueClick() {
-		isChecked = "continue";
+		checkedValue = "continue";
 	}
 
 	function addCard() {
@@ -30,7 +31,7 @@
 		// childDiv.css("padding", "10px");
 		childDiv.setAttribute("style", "padding: 10px");
 		
-		switch (isChecked) {
+		switch (checkedValue) {
 			case "start":
 				startContainer.appendChild(childDiv);
 				return;
