@@ -66,7 +66,7 @@
 		try editing <strong>src/routes/+page.svelte</strong>
 	</h2-->
 
-	<img src="Start-Stop-Weitermachen.png" />
+	<img src="Start-Stop-Weitermachen.png" style="width: 100%" />
 	<!--img src="https://t2informatik.de/wp-content/uploads/2021/03/start-stop-continue-retrospektive.jpg" /-->
 
 	<!--Counter /-->
