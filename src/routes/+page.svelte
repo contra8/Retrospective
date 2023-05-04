@@ -10,6 +10,8 @@
 
 	let checkedValue = "start";
 
+	let startCards = [{text: 'test'}];
+
 	function handleRadioClick(event) {
 		checkedValue = event.target.value;
 	}
@@ -20,11 +22,15 @@
 		child.textContent = inputArea.value // 'child';
 		childDiv.appendChild(child);
 		// childDiv.css("padding", "10px");
-		childDiv.setAttribute("style", "padding: 10px");
+		childDiv.setAttribute("style", "padding: 10px; border: solid 1px; background: white;");
+		childDiv.setAttribute("class", "dynamicCard");
 		
 		switch (checkedValue) {
 			case "start":
-				startContainer.appendChild(childDiv);
+				// startContainer.appendChild(childDiv);
+				startCards.push({text: inputArea.value});	
+				startCards = startCards;
+				console.log(startCards);
 				return;
 			case "stop":
 				stopContainer.appendChild(childDiv);
@@ -86,7 +92,12 @@
 			<button type="button" id="button" on:click={addCard}>Karte hinzufügen</button>
 
 		</div>
-		<div class="column" id="1" bind:this={startContainer}><h2>START</h2></div>
+		<div class="column" id="1" bind:this={startContainer}>
+			<h2>START</h2>
+			{#each startCards as startCard}
+				<div>{startCard.text}</div>
+			{/each}
+		</div>
 		<div class="column" id="2" bind:this={stopContainer}><h2>STOP</h2></div>
 		<div class="column" id="3" bind:this={continueContainer}><h2>WEITERMACHEN</h2></div>
 	</div>
@@ -134,5 +145,10 @@
 
 	.column > div {
 		padding: 50px;
+	}
+
+	.dynamicCard {
+		background-color: coral;
+		border-radius: 4px;
 	}
 </style>
