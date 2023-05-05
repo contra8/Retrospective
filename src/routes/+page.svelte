@@ -20,27 +20,16 @@
 	}
 
 	function addCard() {
-		const childDiv = document.createElement('div');
-		const child = document.createElement('span');
-		child.textContent = inputArea.value // 'child';
-		childDiv.appendChild(child);
-		// childDiv.css("padding", "10px");
-		childDiv.setAttribute("style", "padding: 10px; border: solid 1px; background: white;");
-		childDiv.setAttribute("class", "dynamicCard");
-		
+		let currentArray = [];
 		switch (checkedValue) {
 			case "start":
-				// startContainer.appendChild(childDiv);
-				// startCards.push({text: inputArea.value});	
-				// startCards = startCards;
 				startCards = [...startCards, {text: inputArea.value}];
-				console.log(startCards);
 				return;
 			case "stop":
-				stopContainer.appendChild(childDiv);
+				stopCards = [...stopCards, {text: inputArea.value}];
 				return;
 			case "continue":
-				continueContainer.appendChild(childDiv);
+				continueCards = [...continueCards, {text: inputArea.value}];
 				return;
 		}
 	}
@@ -103,8 +92,18 @@
 				<Card text={startCard.text} />
 			{/each}
 		</div>
-		<div class="column" id="2" bind:this={stopContainer}><h2>STOP</h2></div>
-		<div class="column" id="3" bind:this={continueContainer}><h2>WEITERMACHEN</h2></div>
+		<div class="column" id="2" bind:this={stopContainer}>
+			<h2>STOP</h2>
+			{#each stopCards as stopCard}
+				<Card text={stopCard.text} />
+			{/each}
+		</div>
+		<div class="column" id="3" bind:this={continueContainer}>
+			<h2>WEITERMACHEN</h2>
+			{#each continueCards as continueCard}
+				<Card text={continueCard.text} />
+			{/each}
+		</div>
 	</div>
 </section>
 
