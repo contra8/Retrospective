@@ -2,6 +2,7 @@
 	import Counter from './Counter.svelte';
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
+  import Card from './Card.svelte';
 
 	let inputArea;
 	let startContainer;
@@ -10,7 +11,9 @@
 
 	let checkedValue = "start";
 
-	let startCards = [{text: 'test'}];
+	let startCards = [];
+	let stopCards = [];
+	let continueCards = [];
 
 	function handleRadioClick(event) {
 		checkedValue = event.target.value;
@@ -28,8 +31,9 @@
 		switch (checkedValue) {
 			case "start":
 				// startContainer.appendChild(childDiv);
-				startCards.push({text: inputArea.value});	
-				startCards = startCards;
+				// startCards.push({text: inputArea.value});	
+				// startCards = startCards;
+				startCards = [...startCards, {text: inputArea.value}];
 				console.log(startCards);
 				return;
 			case "stop":
@@ -95,7 +99,8 @@
 		<div class="column" id="1" bind:this={startContainer}>
 			<h2>START</h2>
 			{#each startCards as startCard}
-				<div>{startCard.text}</div>
+				<!--div>{startCard.text}</div-->
+				<Card text={startCard.text} />
 			{/each}
 		</div>
 		<div class="column" id="2" bind:this={stopContainer}><h2>STOP</h2></div>
