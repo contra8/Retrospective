@@ -9,8 +9,11 @@
 <style>
     div {
         background-color: white;
-        border-radius: .5rem;
-        border: solid .2rem;
-        padding: .5rem;
+        border-radius: .2rem;
+        border: solid .1rem;
+    }
+
+    p {
+        margin: 10px;
     }
 </style>
