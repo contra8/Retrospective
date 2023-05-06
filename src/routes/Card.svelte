@@ -1,8 +1,20 @@
 <script>
 	export let text;
+
+    function handleClick(event) {
+        console.log(event.target);
+    }
+
+    function handleDragStart(event) {
+        console.log(event.target);
+    }
+
 </script>
 
-<div>
+<div
+    on:click={handleClick}
+    draggable="true"
+    on:dragstart={handleDragStart}>
     <p>{text}</p>
 </div>
 
