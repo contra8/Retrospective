@@ -12,6 +12,9 @@
 	let checkedValue = "start";
 
 	let cards = [];
+	let startCards = [];
+	let stopCards = [];
+	let continueCards = [];
 
 	function handleRadioClick(event) {
 		checkedValue = event.target.value;
@@ -23,11 +26,9 @@
 	}
 
 	function filterCards() {
-		console.log(cards);
-		const arr = cards.filter((card) => {
-			return card.type === 'start';
-		});
-		console.log(arr);
+		startCards = cards.filter((card) => { return card.type === 'start'; });
+		stopCards = cards.filter((card) => { return card.type === 'stop'; });
+		continueCards = cards.filter((card) => { return card.type === 'continue'; });
 	}
 </script>
 
@@ -83,22 +84,20 @@
 		</div>
 		<div class="column" id="1" bind:this={startContainer}>
 			<h2>START</h2>
-			{#each cards.filter((card) => {
-				return card.type === 'start';
-			}) as startCard}
+			{#each startCards as startCard}
 				<!--div>{startCard.text}</div-->
 				<Card text={startCard.text} />
 			{/each}
 		</div>
 		<div class="column" id="2" bind:this={stopContainer}>
 			<h2>STOP</h2>
-			{#each cards as stopCard}
+			{#each stopCards as stopCard}
 				<Card text={stopCard.text} />
 			{/each}
 		</div>
 		<div class="column" id="3" bind:this={continueContainer}>
 			<h2>WEITERMACHEN</h2>
-			{#each cards as continueCard}
+			{#each continueCards as continueCard}
 				<Card text={continueCard.text} />
 			{/each}
 		</div>
