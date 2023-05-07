@@ -3,6 +3,7 @@
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
   	import Card from './Card.svelte';
+  	import DragDrop from './DragDrop.svelte';
 
 	let inputArea;
 	let startContainer;
@@ -41,6 +42,7 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
+<!--DragDrop /-->
 <section style="flex-grow: 0">
 	<!--h1>
 		<span class="welcome">
