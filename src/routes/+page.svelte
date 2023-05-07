@@ -73,43 +73,44 @@
 				<!--legend>Select a maintenance drone:</legend-->
 			
 				<div>
-				  <input type="radio" id="huey" name="drone" value="start" on:click={handleRadioClick} checked>
-				  <label for="huey">Start</label>
+				  <input type="radio" id="start" name="drone" value="start" on:click={handleRadioClick} checked>
+				  <label for="start">Start</label>
 				</div>
 			
 				<div>
-				  <input type="radio" id="dewey" name="drone" value="stop" on:click={handleRadioClick}>
-				  <label for="dewey">Stop</label>
+				  <input type="radio" id="stop" name="drone" value="stop" on:click={handleRadioClick}>
+				  <label for="stop">Stop</label>
 				</div>
 			
 				<div>
-				  <input type="radio" id="louie" name="drone" value="continue" on:click={handleRadioClick}>
-				  <label for="louie">Weitermachen</label>
+				  <input type="radio" id="continue" name="drone" value="continue" on:click={handleRadioClick}>
+				  <label for="continue">Weitermachen</label>
 				</div>
 			</fieldset>
 			<button type="button" id="button" on:click={addCard}>Karte hinzufügen</button>
 
 		</div>
-		<div class="column" id="1" bind:this={startContainer}>
+		<div class="column" id="drop_zone_1" bind:this={startContainer}>
 			<h2>START</h2>
 			{#each startCards as startCard}
 				<!--div>{startCard.text}</div-->
 				<Card text={startCard.text} />
 			{/each}
 		</div>
-		<div class="column" id="2" bind:this={stopContainer}>
+		<div class="column" id="drop_zone_2" bind:this={stopContainer}>
 			<h2>STOP</h2>
 			{#each stopCards as stopCard}
 				<Card text={stopCard.text} />
 			{/each}
 		</div>
-		<div class="column" id="3" bind:this={continueContainer}>
+		<div class="column" id="drop_zone_3" bind:this={continueContainer}>
 			<h2>WEITERMACHEN</h2>
 			{#each continueCards as continueCard}
 				<Card text={continueCard.text} />
 			{/each}
 		</div>
 	</div>
+
 </section>
 
 <style>
