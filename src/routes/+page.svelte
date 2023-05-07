@@ -37,6 +37,10 @@
 	function filterArrayByCardType(cardType) {
 		return cards.filter((card) => { return card.type === cardType; });
 	}
+
+	function handleDragEnter(event) {
+		console.log('handleDragEnter startet');
+	}
 </script>
 
 <svelte:head>
@@ -90,20 +94,20 @@
 			<button type="button" id="button" on:click={addCard}>Karte hinzufügen</button>
 
 		</div>
-		<div class="column" id="drop_zone_1" bind:this={startContainer}>
+		<div class="column" id="drop_zone_1" bind:this={startContainer} on:dragenter={handleDragEnter}>
 			<h2>START</h2>
 			{#each startCards as startCard}
 				<!--div>{startCard.text}</div-->
 				<Card text={startCard.text} />
 			{/each}
 		</div>
-		<div class="column" id="drop_zone_2" bind:this={stopContainer}>
+		<div class="column" id="drop_zone_2" bind:this={stopContainer} on:dragenter={handleDragEnter}>
 			<h2>STOP</h2>
 			{#each stopCards as stopCard}
 				<Card text={stopCard.text} />
 			{/each}
 		</div>
-		<div class="column" id="drop_zone_3" bind:this={continueContainer}>
+		<div class="column" id="drop_zone_3" bind:this={continueContainer} on:dragenter={handleDragEnter}>
 			<h2>WEITERMACHEN</h2>
 			{#each continueCards as continueCard}
 				<Card text={continueCard.text} />
