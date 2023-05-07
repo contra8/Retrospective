@@ -39,7 +39,12 @@
 	}
 
 	function handleDragEnter(event) {
-		console.log('handleDragEnter startet');
+		console.log('handleDragEnter startet für:', event.target.id);
+	}
+
+	function handleDrop(event) {
+		event.preventDefault();
+		console.log('drop in', event.target.id);
 	}
 </script>
 
@@ -94,20 +99,23 @@
 			<button type="button" id="button" on:click={addCard}>Karte hinzufügen</button>
 
 		</div>
-		<div class="column" id="drop_zone_1" bind:this={startContainer} on:dragenter={handleDragEnter}>
+		<div class="column" id="drop_zone_1" bind:this={startContainer} on:dragenter={handleDragEnter}
+			on:drop={handleDrop} ondragover="return false">
 			<h2>START</h2>
 			{#each startCards as startCard}
 				<!--div>{startCard.text}</div-->
 				<Card text={startCard.text} />
 			{/each}
 		</div>
-		<div class="column" id="drop_zone_2" bind:this={stopContainer} on:dragenter={handleDragEnter}>
+		<div class="column" id="drop_zone_2" bind:this={stopContainer} on:dragenter={handleDragEnter}
+			on:drop={handleDrop} ondragover="return false">
 			<h2>STOP</h2>
 			{#each stopCards as stopCard}
 				<Card text={stopCard.text} />
 			{/each}
 		</div>
-		<div class="column" id="drop_zone_3" bind:this={continueContainer} on:dragenter={handleDragEnter}>
+		<div class="column" id="drop_zone_3" bind:this={continueContainer} on:dragenter={handleDragEnter}
+			on:drop={handleDrop} ondragover="return false">
 			<h2>WEITERMACHEN</h2>
 			{#each continueCards as continueCard}
 				<Card text={continueCard.text} />
@@ -155,6 +163,7 @@
 	.column {
 		/* border: 1px solid black; */
 		margin: 20px;
+		padding: 20px;
 	}
 
 	.column > div {
