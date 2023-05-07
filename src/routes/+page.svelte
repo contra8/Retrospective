@@ -26,9 +26,13 @@
 	}
 
 	function filterCards() {
-		startCards = cards.filter((card) => { return card.type === 'start'; });
-		stopCards = cards.filter((card) => { return card.type === 'stop'; });
-		continueCards = cards.filter((card) => { return card.type === 'continue'; });
+		startCards = filterArrayByCardType('start');
+		stopCards = filterArrayByCardType('stop');
+		continueCards = filterArrayByCardType('continue');
+	}
+
+	function filterArrayByCardType(cardType) {
+		return cards.filter((card) => { return card.type === cardType; });
 	}
 </script>
 
