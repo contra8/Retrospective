@@ -22,8 +22,10 @@
 	}
 
 	function addCard() {
-		cards = [...cards, {text: inputArea.value, type: checkedValue}];
-		filterCards();
+		if (inputArea.value) {
+			cards = [...cards, {text: inputArea.value, type: checkedValue}];
+			filterCards();
+		}
 	}
 
 	function filterCards() {
