@@ -6,7 +6,7 @@
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
   	import Card from './Card.svelte';
   	import DragDrop from './DragDrop.svelte';
-	import { draggedId } from '../stores.js'
+	import { draggedCardId } from '../stores.js'
 	
 	let inputArea;
 	let startContainer;
@@ -20,7 +20,17 @@
 	let stopCards = [];
 	let continueCards = [];
 
-	let id = 0;
+	let idForNextCreatedCard = 0;
+
+	onMount(() => {
+		console.log('onMount');
+		console.log('onMount: draggedCardId =', draggedCardIdContent);
+	})
+
+	let draggedCardIdContent = ''
+	const unsubscribe = draggedCardId.subscribe((value) => draggedCardIdContent = value)
+
+	onDestroy(unsubscribe)
 
 	function handleRadioClick(event) {
 		checkedValue = event.target.value;
@@ -28,8 +38,8 @@
 
 	function addCard() {
 		if (inputArea.value) {
-			id++;
-			cards = [...cards, {text: inputArea.value, type: checkedValue, id: id}];
+			cards = [...cards, {text: inputArea.value, type: checkedValue, id: idForNextCreatedCard}];
+			idForNextCreatedCard++;
 			filterCards();
 		}
 	}
@@ -52,16 +62,6 @@
 		event.preventDefault();
 		console.log('drop in', event.target.id);
 	}
-
-	onMount(() => {
-		console.log('onMount');
-		console.log('onMount: draggedId =', draggedIdContent);
-	})
-
-	let draggedIdContent = ''
-	const unsubscribe = draggedId.subscribe((value) => draggedIdContent = value)
-
-	onDestroy(unsubscribe)
 </script>
 
 <svelte:head>
@@ -120,21 +120,21 @@
 			<h2>START</h2>
 			{#each startCards as startCard}
 				<!--div>{startCard.text}</div-->
-				<Card text={startCard.text} />
+				<Card text={startCard.text} id={startCard.id} />
 			{/each}
 		</div>
 		<div class="column" id="drop_zone_2" bind:this={stopContainer} on:dragenter={handleDragEnter}
 			on:drop={handleDrop} ondragover="return false">
 			<h2>STOP</h2>
 			{#each stopCards as stopCard}
-				<Card text={stopCard.text} />
+				<Card text={stopCard.text} id={stopCard.id} />
 			{/each}
 		</div>
 		<div class="column" id="drop_zone_3" bind:this={continueContainer} on:dragenter={handleDragEnter}
 			on:drop={handleDrop} ondragover="return false">
 			<h2>WEITERMACHEN</h2>
 			{#each continueCards as continueCard}
-				<Card text={continueCard.text} />
+				<Card text={continueCard.text} id={continueCard.id} />
 			{/each}
 		</div>
 	</div>
