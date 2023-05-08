@@ -1,10 +1,13 @@
 <script>
+	import { onMount } from 'svelte';
+	import { onDestroy } from 'svelte'
 	import Counter from './Counter.svelte';
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
   	import Card from './Card.svelte';
   	import DragDrop from './DragDrop.svelte';
-
+	import { draggedId } from '../stores.js'
+	
 	let inputArea;
 	let startContainer;
 	let stopContainer;
@@ -17,13 +20,16 @@
 	let stopCards = [];
 	let continueCards = [];
 
+	let id = 0;
+
 	function handleRadioClick(event) {
 		checkedValue = event.target.value;
 	}
 
 	function addCard() {
 		if (inputArea.value) {
-			cards = [...cards, {text: inputArea.value, type: checkedValue}];
+			id++;
+			cards = [...cards, {text: inputArea.value, type: checkedValue, id: id}];
 			filterCards();
 		}
 	}
@@ -46,6 +52,16 @@
 		event.preventDefault();
 		console.log('drop in', event.target.id);
 	}
+
+	onMount(() => {
+		console.log('onMount');
+		console.log('onMount: draggedId =', draggedIdContent);
+	})
+
+	let draggedIdContent = ''
+	const unsubscribe = draggedId.subscribe((value) => draggedIdContent = value)
+
+	onDestroy(unsubscribe)
 </script>
 
 <svelte:head>
