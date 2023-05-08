@@ -28,9 +28,12 @@
 	})
 
 	let draggedCardIdContent = ''
-	const unsubscribe = draggedCardId.subscribe((value) => draggedCardIdContent = value)
+	// const unsubscribe = draggedCardId.subscribe((value) => draggedCardIdContent = value)
+	draggedCardId.subscribe((value) => {
+		draggedCardIdContent = value;
+	});
 
-	onDestroy(unsubscribe)
+	// onDestroy(unsubscribe)
 
 	function handleRadioClick(event) {
 		checkedValue = event.target.value;
