@@ -146,8 +146,8 @@
 	.column {
 		/* border: 1px solid black; */
 		margin: 20px;
-		margin-bottom: 200px;
 		padding: 20px;
+		height: 100%;
 	}
 
 	.column > div {
