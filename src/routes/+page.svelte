@@ -106,7 +106,7 @@
 	<!--Counter /-->
 
 	<div class="container">
-		<div class="column"><h2>Neue Karte</h2><br/>
+		<div class="column"><h2>New Card</h2><br/>
 			<textarea name="HTML_Nobelpreis" rows=3 cols=30 bind:this={inputArea}></textarea>
 			<fieldset>
 				<!--legend>Select a maintenance drone:</legend-->
@@ -123,10 +123,10 @@
 			
 				<div>
 				  <input type="radio" id="continue" name="drone" value="continue" on:click={handleRadioClick}>
-				  <label for="continue">Weitermachen</label>
+				  <label for="continue">Continue</label>
 				</div>
 			</fieldset>
-			<button type="button" id="button" on:click={addCardToStore}>Karte hinzufügen</button>
+			<button type="button" id="button" on:click={addCardToStore}>Add Card</button>
 
 		</div>
 		<div class="column" id="0" bind:this={startContainer} on:dragenter={handleDragEnter}
@@ -146,7 +146,7 @@
 		</div>
 		<div class="column" id="2" bind:this={continueContainer} on:dragenter={handleDragEnter}
 			on:drop={handleDrop} ondragover="return false">
-			<h2>WEITERMACHEN</h2>
+			<h2>CONTINUE</h2>
 			{#each continueCards as continueCard}
 				<Card text={continueCard.text} id={continueCard.id} />
 			{/each}
