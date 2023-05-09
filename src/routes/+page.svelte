@@ -6,7 +6,7 @@
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
   	import Card from './Card.svelte';
   	import DragDrop from './DragDrop.svelte';
-	import { draggedCardId } from '../stores.js'
+	import { cards, draggedCardId } from '../stores.js'
 	
 	let inputArea;
 	let startContainer;
@@ -15,17 +15,12 @@
 
 	let checkedValue = "start";
 
-	let cards = [];
+	// let cards = [];
 	let startCards = [];
 	let stopCards = [];
 	let continueCards = [];
 
 	let idForNextCreatedCard = 0;
-
-	onMount(() => {
-		console.log('onMount');
-		console.log('onMount: draggedCardId =', draggedCardIdContent);
-	})
 
 	let draggedCardIdContent = ''
 	// const unsubscribe = draggedCardId.subscribe((value) => draggedCardIdContent = value)
@@ -39,9 +34,11 @@
 		checkedValue = event.target.value;
 	}
 
-	function addCard() {
+	function addCardToStore() {
 		if (inputArea.value) {
-			cards = [...cards, {text: inputArea.value, type: checkedValue, id: idForNextCreatedCard}];
+			// addCard({text: inputArea.value, type: checkedValue, id: idForNextCreatedCard});
+			// cards = [...cards, {text: inputArea.value, type: checkedValue, id: idForNextCreatedCard}];
+			$cards = [...$cards, {text: inputArea.value, type: checkedValue, id: idForNextCreatedCard}];
 			idForNextCreatedCard++;
 			filterCards();
 		}
@@ -54,7 +51,7 @@
 	}
 
 	function filterArrayByCardType(cardType) {
-		return cards.filter((card) => { return card.type === cardType; });
+		return $cards.filter((card) => { return card.type === cardType; });
 	}
 
 	function handleDragEnter(event) {
@@ -64,6 +61,20 @@
 	function handleDrop(event) {
 		event.preventDefault();
 		console.log('drop in', event.target.id);
+		console.log($cards);
+		switch (event.target.id) { // ID of drop zone aka DIV
+			case '0':
+				$cards[$draggedCardId].type='start';
+				break;
+			case '1':
+				$cards[$draggedCardId].type='stop';
+				break;
+			case '2':
+				$cards[$draggedCardId].type='continue';
+				break;
+		}
+		filterCards();
+		console.log($cards);
 	}
 </script>
 
@@ -89,7 +100,7 @@
 		try editing <strong>src/routes/+page.svelte</strong>
 	</h2-->
 
-	<img src="Start-Stop-Weitermachen.png" style="width: 100%" />
+	<!--img src="Start-Stop-Weitermachen.png" style="width: 100%" /-->
 	<!--img src="https://t2informatik.de/wp-content/uploads/2021/03/start-stop-continue-retrospektive.jpg" /-->
 
 	<!--Counter /-->
@@ -115,10 +126,10 @@
 				  <label for="continue">Weitermachen</label>
 				</div>
 			</fieldset>
-			<button type="button" id="button" on:click={addCard}>Karte hinzufügen</button>
+			<button type="button" id="button" on:click={addCardToStore}>Karte hinzufügen</button>
 
 		</div>
-		<div class="column" id="drop_zone_1" bind:this={startContainer} on:dragenter={handleDragEnter}
+		<div class="column" id="0" bind:this={startContainer} on:dragenter={handleDragEnter}
 			on:drop={handleDrop} ondragover="return false">
 			<h2>START</h2>
 			{#each startCards as startCard}
@@ -126,14 +137,14 @@
 				<Card text={startCard.text} id={startCard.id} />
 			{/each}
 		</div>
-		<div class="column" id="drop_zone_2" bind:this={stopContainer} on:dragenter={handleDragEnter}
+		<div class="column" id="1" bind:this={stopContainer} on:dragenter={handleDragEnter}
 			on:drop={handleDrop} ondragover="return false">
 			<h2>STOP</h2>
 			{#each stopCards as stopCard}
 				<Card text={stopCard.text} id={stopCard.id} />
 			{/each}
 		</div>
-		<div class="column" id="drop_zone_3" bind:this={continueContainer} on:dragenter={handleDragEnter}
+		<div class="column" id="2" bind:this={continueContainer} on:dragenter={handleDragEnter}
 			on:drop={handleDrop} ondragover="return false">
 			<h2>WEITERMACHEN</h2>
 			{#each continueCards as continueCard}
@@ -182,6 +193,7 @@
 	.column {
 		/* border: 1px solid black; */
 		margin: 20px;
+		margin-bottom: 200px;
 		padding: 20px;
 	}
 
