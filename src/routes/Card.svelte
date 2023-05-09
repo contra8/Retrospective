@@ -1,5 +1,4 @@
 <script>
-	import { onDestroy } from 'svelte'
 	import { draggedCardId } from '../stores.js'
 
     export let id;
@@ -7,7 +6,6 @@
 
     function handleDragStart(event) {
         $draggedCardId = id;
-        console.log('draggedCardIdContent =', draggedCardIdContent);
     }
 
 </script>
