@@ -119,6 +119,7 @@
 
 	h1 {
 		width: 100%;
+		font-weight: 800;
 	}
 
 	.welcome {
@@ -148,6 +149,8 @@
 		margin: 20px;
 		padding: 20px;
 		height: 100%;
+		border: solid 0.2em;
+		border-radius: 0.5em;
 	}
 
 	.column > div {
