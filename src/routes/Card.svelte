@@ -1,22 +1,9 @@
 <script>
-	import { onMount } from 'svelte';
 	import { onDestroy } from 'svelte'
-	import { cards, draggedCardId } from '../stores.js'
+	import { draggedCardId } from '../stores.js'
 
     export let id;
     export let text;
-
-    // let id = 0;
-
-    onMount(() => {
-		console.log('onMount');
-		console.log('onMount: draggedCardId =', draggedCardIdContent);
-	})
-
-	let draggedCardIdContent = null;
-	const unsubscribe = draggedCardId.subscribe((value) => draggedCardIdContent = value)
-
-	onDestroy(unsubscribe)
 
     function handleDragStart(event) {
         $draggedCardId = id;
