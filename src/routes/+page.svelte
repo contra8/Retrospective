@@ -19,6 +19,7 @@
 		if (inputArea.value) {
 			$cards = [...$cards, {text: inputArea.value, type: checkedValue, id: idForNextCreatedCard}];
 			idForNextCreatedCard++;
+			console.log('cards =', $cards);
 			filterCards();
 		}
 	}
@@ -50,6 +51,7 @@
 				$cards[$draggedCardId].type='continue';
 				break;
 		}
+		console.log('cards =', $cards);
 		filterCards();
 	}
 
