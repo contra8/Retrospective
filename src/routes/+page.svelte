@@ -139,7 +139,8 @@
 	}
 
 	.container {
-		width: 940px;
+		width: 100%;
+		max-width: 1000px;
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 	}

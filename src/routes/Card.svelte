@@ -21,6 +21,7 @@
         background-color: white;
         border-radius: .2rem;
         border: solid .1rem;
+        margin-bottom: 1rem;
     }
 
     p {
