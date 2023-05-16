@@ -63,30 +63,31 @@
 </svelte:head>
 
 <!--DragDrop /-->
-<section style="flex-grow: 0">
-	<div class="container">
-		<div class="column"><h2>New Card</h2><br/>
-			<textarea name="HTML_Nobelpreis" rows=3 cols=30 bind:this={inputArea}></textarea>
-			<fieldset>
-				<!--legend>Select a maintenance drone:</legend-->
-			
-				<div>
-				  <input type="radio" id="start" name="drone" value="start" on:click={handleRadioClick} checked>
-				  <label for="start">Start</label>
-				</div>
-			
-				<div>
-				  <input type="radio" id="stop" name="drone" value="stop" on:click={handleRadioClick}>
-				  <label for="stop">Stop</label>
-				</div>
-			
-				<div>
-				  <input type="radio" id="continue" name="drone" value="continue" on:click={handleRadioClick}>
-				  <label for="continue">Continue</label>
-				</div>
-			</fieldset>
-			<button type="button" id="button" on:click={addCardToStore}>Add Card</button>
-		</div>
+
+<div class="row">
+	<div class="column menu">
+		<h2>New Card</h2><br/>
+		<textarea name="HTML_Nobelpreis" rows=3 cols=30 bind:this={inputArea}></textarea>
+		<fieldset>
+			<!--legend>Select a maintenance drone:</legend-->
+			<div>
+				<input type="radio" id="start" name="drone" value="start" on:click={handleRadioClick} checked>
+				<label for="start">Start</label>
+			</div>
+		
+			<div>
+				<input type="radio" id="stop" name="drone" value="stop" on:click={handleRadioClick}>
+				<label for="stop">Stop</label>
+			</div>
+		
+			<div>
+				<input type="radio" id="continue" name="drone" value="continue" on:click={handleRadioClick}>
+				<label for="continue">Continue</label>
+			</div>
+		</fieldset>
+		<button type="button" id="button" on:click={addCardToStore}>Add Card</button>
+	</div>
+	<div class="column cards">
 		<div class="column" id="0" bind:this={startContainer} on:drop={handleDrop} ondragover="return false">
 			<h2>START</h2>
 			{#each startCards as startCard}
@@ -107,6 +108,10 @@
 			{/each}
 		</div>
 	</div>
+</div>
+<section style="flex-grow: 0">
+	<div class="container">
+	</div>
 
 </section>
 
@@ -122,6 +127,23 @@
 	h1 {
 		width: 100%;
 		font-weight: 800;
+	}
+
+	.row {
+		width: 100%;
+		display: flex;
+	}
+
+	.column.menu {
+		/* flex: 40%; */
+		flex: 0 0 20rem;
+	}
+
+	.column.cards {
+		/* flex: 60%; */
+		flex-grow: 1;
+		flex-direction: row;
+		flex: 0 0 40rem;
 	}
 
 	.welcome {

@@ -8,21 +8,41 @@
         $draggedCardId = id;
     }
 
+    function handleCloseBtnClick(event) {
+        console.log('close');
+    }
+
 </script>
 
 <div
+    class="card"
     draggable="true"
     on:dragstart={handleDragStart}>
+    <div class="closeBtn" on:click={handleCloseBtnClick}>X</div>
     <p>{text}</p>
 </div>
 
 <style>
-    div {
+    .card {
         background-color: white;
         border-radius: .2rem;
         border: solid .1rem;
         margin-bottom: 1rem;
     }
+
+    .closeBtn {
+        width: 100%;
+        text-align: right;
+        padding-right: 1rem;
+        cursor: pointer;
+    }
+
+    /*
+    div:after{
+        display: inline-block;
+        content: "\00d7";
+    }
+    */
 
     p {
         margin: 10px;
