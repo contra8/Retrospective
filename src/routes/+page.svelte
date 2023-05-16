@@ -67,19 +67,17 @@
 <div class="row">
 	<div class="column menu">
 		<h2>New Card</h2><br/>
-		<textarea name="HTML_Nobelpreis" rows=3 cols=30 bind:this={inputArea}></textarea>
+		<textarea class="newCardText" name="HTML_Nobelpreis" rows=3 cols=30 bind:this={inputArea}></textarea>
 		<fieldset>
 			<!--legend>Select a maintenance drone:</legend-->
 			<div>
 				<input type="radio" id="start" name="drone" value="start" on:click={handleRadioClick} checked>
 				<label for="start">Start</label>
-			</div>
-		
+			</div>		
 			<div>
 				<input type="radio" id="stop" name="drone" value="stop" on:click={handleRadioClick}>
 				<label for="stop">Stop</label>
-			</div>
-		
+			</div>		
 			<div>
 				<input type="radio" id="continue" name="drone" value="continue" on:click={handleRadioClick}>
 				<label for="continue">Continue</label>
@@ -87,7 +85,7 @@
 		</fieldset>
 		<button type="button" id="button" on:click={addCardToStore}>Add Card</button>
 	</div>
-	<div class="column cards">
+	<div class="cards">
 		<div class="column" id="0" bind:this={startContainer} on:drop={handleDrop} ondragover="return false">
 			<h2>START</h2>
 			{#each startCards as startCard}
@@ -134,12 +132,16 @@
 		display: flex;
 	}
 
+	.column {
+		flex: 1 1 0;
+	}
+
 	.column.menu {
 		/* flex: 40%; */
 		flex: 0 0 20rem;
 	}
 
-	.column.cards {
+	.cards {
 		/* flex: 60%; */
 		display: flex;
 		flex-grow: 1;
@@ -186,5 +188,10 @@
 	.dynamicCard {
 		background-color: coral;
 		border-radius: 4px;
+	}
+
+	.newCardText {
+		width: 95%;
+		height: 8rem;
 	}
 </style>
