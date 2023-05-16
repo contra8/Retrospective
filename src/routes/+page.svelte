@@ -141,9 +141,10 @@
 
 	.column.cards {
 		/* flex: 60%; */
+		display: flex;
 		flex-grow: 1;
 		flex-direction: row;
-		flex: 0 0 40rem;
+		flex: 0 0 60rem;
 	}
 
 	.welcome {
