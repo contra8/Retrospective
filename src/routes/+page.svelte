@@ -52,9 +52,8 @@
 	function filterArrayByCardId(array) {
 		console.log('filterArrayByCardId startet');
 		console.log('filterArrayByCardId: array = ', array);
-		return array.filter((card) => { 
-			console.log(card.id === $draggedCardId);
-			return card.id === $draggedCardId; });
+		const tmpArray = array.filter((card) => { return card.id === $draggedCardId; });
+		return tmpArray[0];
 	}
 
 	function handleRadioClick(event) {
@@ -63,58 +62,58 @@
 
 	function handleDrop(event) {
 		event.preventDefault();
-		console.log(event.target.id);
-		console.log($draggedCardId);
-		console.log($draggedCardType);
 		switch (event.target.id) { // ID of drop zone aka DIV
 			case '0':
 				moveToStartCards();
-				// $cards[$draggedCardId].type=START;
 				break;
 			case '1':
 				moveToStopCards();
-				// $cards[$draggedCardId].type=STOP;
 				break;
 			case '2':
 				moveToContinueCards();
-				// $cards[$draggedCardId].type=CONTINUE;
 				break;
 		}
-		// console.log('cards =', $cards);
 		// filterCards();
 	}
 
 	const moveToStartCards = () => {
-		console.log('moveToStartCards startet: $draggedCardType =', $draggedCardType);
-		let currentTypeArray = [];
-		let sourceArray = [];
-		switch ($draggedCardType) {
-			case START:
-				currentTypeArray = filterArrayByCardId($startCards);
-				console.log(currentTypeArray[0]);
-				sourceArray = $startCards;
-				break;
-			case STOP:
-				currentTypeArray = filterArrayByCardId($stopCards);
-				console.log('---------')
-				console.log(currentTypeArray);
-				sourceArray = $stopCards;
-				break;
-			case CONTINUE:
-				currentTypeArray = filterArrayByCardId($continueCards);
-				console.log(currentTypeArray[0]);
-				sourceArray = $continueCards;
-				break;
-		}
+		console.log('moveToStartCard startet')
+		const sourceArray = getSourceArray();
+		console.log(sourceArray);
 		addCardToTargetArray(sourceArray, $startCards);
 		cleanSourceArray($startCards);
-		// delete $startCards[$startCards.indexOf(currentTypeArray[0])];
 		console.log('$startCards =', $startCards);
+	}
+
+	const moveToStopCards = () => {
+		const sourceArray = getSourceArray();
+		addCardToTargetArray(sourceArray, $stopCards);
+		cleanSourceArray($stopCards);
+	}
+
+	const moveToContinueCards = () => {
+		const sourceArray = getSourceArray();
+		addCardToTargetArray(sourceArray, $continueCards);
+		cleanSourceArray($continueCards);
+	}
+
+	const getSourceArray = () => {
+		switch ($draggedCardType) {
+			case START:
+				return $startCards;
+			case STOP:
+				return $stopCards;
+			case CONTINUE:
+				return $continueCards;
+		}
 	}
 
 	const addCardToTargetArray = (sourceArray, targetArray) => {
 		const currentCard = filterArrayByCardId(sourceArray);
+		console.log('currentCard =', currentCard);
+		console.log('targetArray vorher =', targetArray);
 		targetArray.push(currentCard);
+		console.log('targetArray nachher =', targetArray);
 	}
 
 	const cleanSourceArray = (array) => {
@@ -123,51 +122,16 @@
 			if (array[i].id !== $draggedCardId)
 				tmpArray.push(array[i]); 
 		}
-		$startCards = tmpArray;
-	}
-
-	const moveToStopCards = () => {
-		let currentTypeArray = [];
-		let sourceArray = [];
 		switch ($draggedCardType) {
 			case START:
-				currentTypeArray = filterArrayByCardId($startCards);
-				console.log(currentTypeArray[0]);
-				console.log('test:', $startCards.indexOf(currentTypeArray[0]));
-				sourceArray = $startCards;
-				break;
+				$startCards = tmpArray;
+				return;
 			case STOP:
-				currentTypeArray = filterArrayByCardId($stopCards);
-				console.log(currentTypeArray[0]);
-				sourceArray = $stopCards;
-				break;
+				$stopCards = tmpArray;
+				return;
 			case CONTINUE:
-				currentTypeArray = filterArrayByCardId($continueCards);
-				console.log(currentTypeArray[0]);
-				sourceArray = $continueCards;
-				break;
-		}
-		console.log('$startCards =', $startCards);
-		addCardToTargetArray(sourceArray, $startCards);
-		cleanSourceArray($startCards);
-		console.log('$startCards =', $startCards);
-	}
-
-	const moveToContinueCards = () => {
-		let currentTypeArray = [];
-		switch ($draggedCardType) {
-			case START:
-				currentTypeArray = filterArrayByCardId($startCards);
-				console.log(currentTypeArray[0]);
-				break;
-			case STOP:
-				currentTypeArray = filterArrayByCardId($stopCards);
-				console.log(currentTypeArray[0]);
-				break;
-			case CONTINUE:
-				currentTypeArray = filterArrayByCardId($continueCards);
-				console.log(currentTypeArray[0]);
-				break;
+				$continueCards = tmpArray;
+				return;
 		}
 	}
 
