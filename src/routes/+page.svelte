@@ -1,6 +1,6 @@
 <script>
 	import Card from './Card.svelte';
-	import { cards, startCards, stopCards, continueCards, draggedCardId } from '../stores.js'
+	import { cards, startCards, stopCards, continueCards, draggedCard, draggedCardId, draggedCardType } from '../stores.js'
 
 	let inputArea;
 	let startContainer;
@@ -49,6 +49,14 @@
 		return $cards.filter((card) => { return card.type === cardType; });
 	}
 
+	function filterArrayByCardId(array) {
+		console.log('filterArrayByCardId startet');
+		console.log('filterArrayByCardId: array = ', array);
+		return array.filter((card) => { 
+			console.log(card.id === $draggedCardId);
+			return card.id === $draggedCardId; });
+	}
+
 	function handleRadioClick(event) {
 		chosenCardType = event.target.value;
 	}
@@ -56,6 +64,8 @@
 	function handleDrop(event) {
 		event.preventDefault();
 		console.log(event.target.id);
+		console.log($draggedCardId);
+		console.log($draggedCardType);
 		switch (event.target.id) { // ID of drop zone aka DIV
 			case '0':
 				moveToStartCards();
@@ -70,20 +80,95 @@
 				// $cards[$draggedCardId].type=CONTINUE;
 				break;
 		}
-		console.log('cards =', $cards);
+		// console.log('cards =', $cards);
 		// filterCards();
 	}
 
 	const moveToStartCards = () => {
+		console.log('moveToStartCards startet: $draggedCardType =', $draggedCardType);
+		let currentTypeArray = [];
+		let sourceArray = [];
+		switch ($draggedCardType) {
+			case START:
+				currentTypeArray = filterArrayByCardId($startCards);
+				console.log(currentTypeArray[0]);
+				sourceArray = $startCards;
+				break;
+			case STOP:
+				currentTypeArray = filterArrayByCardId($stopCards);
+				console.log('---------')
+				console.log(currentTypeArray);
+				sourceArray = $stopCards;
+				break;
+			case CONTINUE:
+				currentTypeArray = filterArrayByCardId($continueCards);
+				console.log(currentTypeArray[0]);
+				sourceArray = $continueCards;
+				break;
+		}
+		addCardToTargetArray(sourceArray, $startCards);
+		cleanSourceArray($startCards);
+		// delete $startCards[$startCards.indexOf(currentTypeArray[0])];
+		console.log('$startCards =', $startCards);
+	}
 
+	const addCardToTargetArray = (sourceArray, targetArray) => {
+		const currentCard = filterArrayByCardId(sourceArray);
+		targetArray.push(currentCard);
+	}
+
+	const cleanSourceArray = (array) => {
+		let tmpArray = [];
+		for (let i = 0; i < array.length; i++) {
+			if (array[i].id !== $draggedCardId)
+				tmpArray.push(array[i]); 
+		}
+		$startCards = tmpArray;
 	}
 
 	const moveToStopCards = () => {
-		
+		let currentTypeArray = [];
+		let sourceArray = [];
+		switch ($draggedCardType) {
+			case START:
+				currentTypeArray = filterArrayByCardId($startCards);
+				console.log(currentTypeArray[0]);
+				console.log('test:', $startCards.indexOf(currentTypeArray[0]));
+				sourceArray = $startCards;
+				break;
+			case STOP:
+				currentTypeArray = filterArrayByCardId($stopCards);
+				console.log(currentTypeArray[0]);
+				sourceArray = $stopCards;
+				break;
+			case CONTINUE:
+				currentTypeArray = filterArrayByCardId($continueCards);
+				console.log(currentTypeArray[0]);
+				sourceArray = $continueCards;
+				break;
+		}
+		console.log('$startCards =', $startCards);
+		addCardToTargetArray(sourceArray, $startCards);
+		cleanSourceArray($startCards);
+		console.log('$startCards =', $startCards);
 	}
 
 	const moveToContinueCards = () => {
-		
+		let currentTypeArray = [];
+		switch ($draggedCardType) {
+			case START:
+				currentTypeArray = filterArrayByCardId($startCards);
+				console.log(currentTypeArray[0]);
+				break;
+			case STOP:
+				currentTypeArray = filterArrayByCardId($stopCards);
+				console.log(currentTypeArray[0]);
+				break;
+			case CONTINUE:
+				currentTypeArray = filterArrayByCardId($continueCards);
+				console.log(currentTypeArray[0]);
+				break;
+		}
 	}
 
 </script>
@@ -121,19 +206,19 @@
 		  <h2>START</h2>
 		  {#each $startCards as startCard}
 			  <!--div>{startCard.text}</div-->
-			  <Card text={startCard.text} id={startCard.id} />
+			  <Card text={startCard.text} id={startCard.id} type={startCard.type} />
 		  {/each}
 	  </div>
 	  <div class="column" id="1" bind:this={stopContainer} on:drop={handleDrop} ondragover="return false">
 		  <h2>STOP</h2>
 		  {#each $stopCards as stopCard}
-			  <Card text={stopCard.text} id={stopCard.id} />
+			  <Card text={stopCard.text} id={stopCard.id} type={stopCard.type} />
 		  {/each}
 	  </div>
 	  <div class="column" id="2" bind:this={continueContainer} on:drop={handleDrop} ondragover="return false">
 		  <h2>CONTINUE</h2>
 		  {#each $continueCards as continueCard}
-			  <Card text={continueCard.text} id={continueCard.id} />
+			  <Card text={continueCard.text} id={continueCard.id} type={continueCard.type} />
 		  {/each}
 	  </div>
   </div>

@@ -1,11 +1,13 @@
 <script>
-	import { draggedCardId } from '../stores.js'
+	import { draggedCard, draggedCardId, draggedCardType } from '../stores.js'
 
     export let id;
+    export let type;
     export let text;
 
     function handleDragStart(event) {
         $draggedCardId = id;
+        $draggedCardType = type;
     }
 
     function handleCloseBtnClick(event) {
