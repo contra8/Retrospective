@@ -142,11 +142,16 @@
 	}
 
 	.cards {
-		/* flex: 60%; */
-		display: flex;
-		flex-grow: 1;
-		flex-direction: row;
-		flex: 0 0 60rem;
+			/* flex: 60%; */
+			display: flex;
+			flex-grow: 1;
+			flex-direction: row;
+	}
+
+	@media screen and (min-width: 1368px) {
+		.cards {
+			flex: 0 0 60rem;
+		}
 	}
 
 	.welcome {
