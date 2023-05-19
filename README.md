@@ -7,7 +7,10 @@ Following the pattern of "Start - Stop - Continue" during a retrospective meetin
 
 ## Showroom
 
-The app in its latest version can be seen here: [retrospective-eight.vercel.app](https://retrospective-eight.vercel.app/)
+The app in its latest version can be seen here: 
+- [retrospective-contra8.vercel.app](https://retrospective-contra8.vercel.app/)
+- [retrospective-git-main-contra8.vercel.app](https://retrospective-git-main-contra8.vercel.app/)
+- [retrospective-eight.vercel.app](https://retrospective-eight.vercel.app/)
 
 ## Installing
 
