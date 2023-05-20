@@ -1,5 +1,5 @@
 <script>
-	import { draggedCard, draggedCardId, draggedCardType } from '../stores.js'
+	import { draggedCardId, draggedCardType } from '../stores.js'
 
     export let id;
     export let type;

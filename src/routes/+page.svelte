@@ -1,6 +1,6 @@
 <script>
 	import Card from './Card.svelte';
-	import { cards, startCards, stopCards, continueCards, draggedCard, draggedCardId, draggedCardType } from '../stores.js'
+	import { startCards, stopCards, continueCards, draggedCardId, draggedCardType } from '../stores.js'
 
 	let inputArea;
 	let startContainer;
@@ -17,6 +17,7 @@
 	const STOP = 'stop';
 	const CONTINUE = 'continue';
 	let chosenCardType = START;
+	let targetCardType;
 
 	function addCardToStore() {
 		if (inputArea.value) {
@@ -34,7 +35,8 @@
 
 			// $cards = [...$cards, {text: inputArea.value, type: chosenCardType, id: idForNextCreatedCard}];
 			idForNextCreatedCard++;
-			// console.log('les cards =', $startCards);
+			console.log('$startCards =', $startCards);
+			console.log('$stopCards =', $stopCards);
 			// filterCards();
 		}
 	}
@@ -45,9 +47,9 @@
 	// 	continueCards = filterArrayByCardType(CONTINUE);
 	// }
 
-	function filterArrayByCardType(cardType) {
-		return $cards.filter((card) => { return card.type === cardType; });
-	}
+	// function filterArrayByCardType(cardType) {
+	// 	return $cards.filter((card) => { return card.type === cardType; });
+	// }
 
 	function filterArrayByCardId(array) {
 		console.log('filterArrayByCardId startet');
@@ -64,12 +66,15 @@
 		event.preventDefault();
 		switch (event.target.id) { // ID of drop zone aka DIV
 			case '0':
+				targetCardType = START;
 				moveToStartCards();
 				break;
 			case '1':
+				targetCardType = STOP;
 				moveToStopCards();
 				break;
 			case '2':
+				targetCardType = CONTINUE;
 				moveToContinueCards();
 				break;
 		}
@@ -83,12 +88,14 @@
 		addCardToTargetArray(sourceArray, $startCards);
 		cleanSourceArray($startCards);
 		console.log('$startCards =', $startCards);
+		console.log('$stopCards =', $stopCards);
 	}
 
 	const moveToStopCards = () => {
 		const sourceArray = getSourceArray();
 		addCardToTargetArray(sourceArray, $stopCards);
 		cleanSourceArray($stopCards);
+		console.log('$stopCards =', $stopCards);
 	}
 
 	const moveToContinueCards = () => {
@@ -110,27 +117,54 @@
 
 	const addCardToTargetArray = (sourceArray, targetArray) => {
 		const currentCard = filterArrayByCardId(sourceArray);
+		currentCard.type = targetCardType;
+		// currentCard.type = START;
 		console.log('currentCard =', currentCard);
 		console.log('targetArray vorher =', targetArray);
+		console.log('$startCards vorher =', $startCards);
+		console.log('$stopCards vorher =', $stopCards);
 		targetArray.push(currentCard);
 		console.log('targetArray nachher =', targetArray);
+		console.log('$startCards nachher =', $startCards);
+		console.log('$stopCards nachher =', $stopCards);
+		// $startCards = [{text: 'hase', type: START, id: 215}];
+
+
 	}
 
 	const cleanSourceArray = (array) => {
 		let tmpArray = [];
-		for (let i = 0; i < array.length; i++) {
-			if (array[i].id !== $draggedCardId)
-				tmpArray.push(array[i]); 
-		}
 		switch ($draggedCardType) {
 			case START:
+				// tmpArray = $startCards;
+				for (let i = 0; i < $startCards.length; i++) {
+					if ($startCards[i].id !== $draggedCardId) {
+						console.log('push:', $startCards[i].id);
+						tmpArray.push($startCards[i]);
+					}
+				}
 				$startCards = tmpArray;
 				return;
 			case STOP:
+				// tmpArray = $stopCards;
+				for (let i = 0; i < $stopCards.length; i++) {
+					if ($stopCards[i].id !== $draggedCardId) {
+						console.log('push:', $stopCards[i].id);
+						tmpArray.push($stopCards[i]);
+					}
+				}
 				$stopCards = tmpArray;
 				return;
 			case CONTINUE:
+				// tmpArray = $continueCards;
+				for (let i = 0; i < $continueCards.length; i++) {
+					if ($continueCards[i].id !== $draggedCardId) {
+						console.log('push:', $continueCards[i].id);
+						tmpArray.push($continueCards[i]);
+					}
+				}
 				$continueCards = tmpArray;
+				console.log('$continueCards =', $continueCards);
 				return;
 		}
 	}
