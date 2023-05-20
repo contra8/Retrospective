@@ -118,7 +118,6 @@
 	const addCardToTargetArray = (sourceArray, targetArray) => {
 		const currentCard = filterArrayByCardId(sourceArray);
 		currentCard.type = targetCardType;
-		// currentCard.type = START;
 		console.log('currentCard =', currentCard);
 		console.log('targetArray vorher =', targetArray);
 		console.log('$startCards vorher =', $startCards);
@@ -127,9 +126,6 @@
 		console.log('targetArray nachher =', targetArray);
 		console.log('$startCards nachher =', $startCards);
 		console.log('$stopCards nachher =', $stopCards);
-		// $startCards = [{text: 'hase', type: START, id: 215}];
-
-
 	}
 
 	const cleanSourceArray = (array) => {
